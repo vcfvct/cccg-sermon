@@ -1,4 +1,9 @@
-a {
+.app-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.header-link{
   text-decoration: none;
   cursor: pointer;
   color: #8bf4f4;

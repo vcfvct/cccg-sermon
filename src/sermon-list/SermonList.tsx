@@ -41,25 +41,22 @@ export const SermonList = () => {
   // Example of consuming Grid Event
   const cellClickedListener = useCallback((e: RowClickedEvent) => {
     console.log(e);
-    navigate('/detail', { state: e.data  });
+    navigate('/detail', { state: e.data });
   }, []);
 
   return (
-    <>
-
-      {/* On div wrapping Grid a) specify theme CSS Class Class and b) sets Grid size */}
-      <div className="ag-theme-alpine" style={{ maxWidth: 1024, height: '100%', margin: '0 auto' }}>
-        <AgGridReact
-          rowData={sermons} // Row Data for Rows
-          columnDefs={columnDefs} // Column Defs for Columns
-          defaultColDef={defaultColDef} // Default Column Properties
-          animateRows={true} // Optional - set to 'true' to have rows animate when sorted
-          rowSelection='multiple' // Options - allows click selection of rows
-          pagination={true}
-          onCellClicked={cellClickedListener} // Optional - registering for Grid Event
-        />
-      </div>
-    </>
+    <div className="ag-theme-alpine" style={{ maxWidth: 1024, height: '100%', margin: '0 auto' }}>
+      <AgGridReact
+        rowData={sermons} // Row Data for Rows
+        columnDefs={columnDefs} // Column Defs for Columns
+        defaultColDef={defaultColDef} // Default Column Properties
+        animateRows={true} // Optional - set to 'true' to have rows animate when sorted
+        rowSelection='multiple' // Options - allows click selection of rows
+        pagination={true}
+        // paginationPageSize={50}
+        onCellClicked={cellClickedListener} // Optional - registering for Grid Event
+      />
+    </div>
   );
 }
 
