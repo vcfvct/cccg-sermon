@@ -4,7 +4,7 @@ import { AgGridReact } from 'ag-grid-react'; // the AG Grid React Component
 
 import 'ag-grid-community/dist/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css'; // Optional theme 
-import { RowClickedEvent } from 'ag-grid-community';
+import { ColDef, RowClickedEvent, ValueFormatterParams } from 'ag-grid-community';
 import { useNavigate } from 'react-router-dom';
 
 export const SermonList = () => {
@@ -23,13 +23,12 @@ export const SermonList = () => {
     })
   }, [])
 
-
   // Each Column Definition results in one Column.
-  const columnDefs = [
+  const columnDefs: ColDef[] = [
     { field: 'title', filter: true, sortable: false },
     { field: 'author', filter: 'agSetColumnFilter', },
     { field: 'eventName', filter: true },
-    { field: 'eventDate', filter: true },
+    { field: 'eventDate', filter: true, resizable: true, valueFormatter: param => param.data.eventDate.toLocaleDateString()},
     { field: 'description', sortable: false },
   ];
 
