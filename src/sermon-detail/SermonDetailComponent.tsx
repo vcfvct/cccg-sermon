@@ -9,7 +9,6 @@ import { VideoIcon } from '../icons/VideoIcon';
 export const SermonDetailComponent = () => {
   const { state } = useLocation();
   const podCast = state as PodCastMeta;
-  console.log(podCast);
   return (
     <div className="detail-container">
       <div className="back-container">

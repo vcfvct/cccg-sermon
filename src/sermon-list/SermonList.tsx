@@ -39,7 +39,6 @@ export const SermonList = () => {
 
   // Example of consuming Grid Event
   const cellClickedListener = useCallback((e: RowClickedEvent) => {
-    console.log(e);
     navigate('/detail', { state: e.data });
   }, []);
 
