@@ -5,13 +5,13 @@ export const HeaderComponent = () => {
   return (
     <div className='app-header'>
       <a href="https://www.cccgermantown.org" target="blank">
-        <img src='/cccg_logo_50x50_trans.webp' alt='logo' />
+        <img src='./cccg_logo_50x50_trans.webp' alt='logo' />
       </a>
-      <h3>
+      <h1>
         <a className='header-link' href="https://www.cccgermantown.org" target="blank">基督教德国镇中国教会</a>
         <br />
         <span><a className='header-link' href="https://www.cccgermantown.org" target="blank">Chinese Christian Church of Germantown</a></span>
-      </h3>
+      </h1>
     </div>
   )
 };

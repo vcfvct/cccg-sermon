@@ -1,5 +1,5 @@
 import React from "react";
-import './SermonDetailStyles.css';
+import './SermonDetailStyles.scss';
 import { Link, useLocation } from "react-router-dom";
 import { PodCastMeta } from "../sermon-list/SermonList";
 import { BackArrow } from '../icons/BackArrow';
@@ -20,7 +20,7 @@ export const SermonDetailComponent = () => {
       <div className="detail-meta" style={{ display: 'flex' }}>
         <div>{podCast.author} </div>
         <div style={{ marginRight: '20px' }}></div>
-        <div> {podCast.eventDate.toLocaleDateString()}</div>
+        <div> {podCast.eventDate?.toLocaleDateString()}</div>
       </div>
       <h1>{podCast.title}</h1>
       <div style={{ margin: '20px' }}>{podCast.eventName}: {podCast.description}</div>

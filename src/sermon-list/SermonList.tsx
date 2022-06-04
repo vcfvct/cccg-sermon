@@ -13,7 +13,7 @@ export const SermonList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    parse('/sermons.csv', {
+    parse('./sermons.csv', {
       download: true,
       header: true,
       dynamicTyping: true,
@@ -28,7 +28,7 @@ export const SermonList = () => {
     { field: 'title', filter: true, sortable: false },
     { field: 'author', filter: 'agSetColumnFilter', },
     { field: 'eventName', filter: true },
-    { field: 'eventDate', filter: true, resizable: true, valueFormatter: param => param.data.eventDate.toLocaleDateString()},
+    { field: 'eventDate', filter: true, resizable: true, valueFormatter: param => param.data.eventDate?.toLocaleDateString()},
     { field: 'description', sortable: false },
   ];
 
@@ -50,8 +50,9 @@ export const SermonList = () => {
         columnDefs={columnDefs} // Column Defs for Columns
         defaultColDef={defaultColDef} // Default Column Properties
         animateRows={true} // Optional - set to 'true' to have rows animate when sorted
-        rowSelection='multiple' // Options - allows click selection of rows
+        // rowSelection='multiple' // Options - allows click selection of rows
         pagination={true}
+        domLayout="autoHeight"
         // paginationPageSize={50}
         onCellClicked={cellClickedListener} // Optional - registering for Grid Event
       />
