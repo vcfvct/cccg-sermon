@@ -1,7 +1,7 @@
-.detail-container { 
+.detail-container {
   max-width: 1024px;
-  height: '100%'; 
-  margin: 0 auto; 
+  height: '100%';
+  margin: 0 auto;
 }
 
 .back-container {
@@ -28,4 +28,19 @@
   max-width: 110px;
   display: flex;
   margin: 50px;
+}
+
+.preacher-icon {
+  margin-right: 10px;
+  display: inline-block;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  border-radius: 50%;
+
+  img{
+    height: 100%;
+    width: auto;
+  }
 }

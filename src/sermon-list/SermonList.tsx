@@ -27,8 +27,8 @@ export const SermonList = () => {
   const columnDefs: ColDef[] = [
     { field: 'title', filter: true, sortable: false },
     { field: 'author', filter: 'agSetColumnFilter', },
-    { field: 'eventName', filter: true },
     { field: 'eventDate', filter: true, resizable: true, valueFormatter: param => param.data.eventDate?.toLocaleDateString()},
+    { field: 'eventName', filter: true },
     { field: 'description', sortable: false },
   ];
 
