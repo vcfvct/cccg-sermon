@@ -24,7 +24,7 @@ export const SermonDetailComponent = () => {
           {podCast.author}
         </div>
         <div style={{ marginRight: '20px' }}></div>
-        <div> {podCast.eventDate?.toLocaleDateString()}</div>
+        <div> {podCast.eventDate ? new Date(podCast.eventDate).toLocaleDateString() : ''}</div>
       </div>
       <h1>{podCast.title}</h1>
       <div style={{ margin: '20px' }}>{podCast.eventName}: {podCast.description}</div>
