@@ -72,11 +72,11 @@ export const SermonList = () => {
   const onFirstDataRendered = (event: FirstDataRenderedEvent) => {
     localCachedColumnState && event.columnApi.applyColumnState({ state: localCachedColumnState, applyOrder: true });
     localCachedPageNumber >= 0 && event.api.paginationGoToPage(localCachedPageNumber);
-    localCachedLastClicked !== null && event.api.ensureIndexVisible(localCachedLastClicked);
+    localCachedLastClicked !== null && event.api.ensureIndexVisible(localCachedLastClicked, 'middle');
   }
 
   return (
-    <div className="ag-theme-alpine" style={{ maxWidth: 1024, height: '100%', margin: '0 auto' }}>
+    <div className="ag-theme-alpine" style={{ maxWidth: 1024, height: '100%', width: '100%', margin: '0 auto' }}>
       <AgGridReact
         rowData={sermons} // Row Data for Rows
         columnDefs={columnDefs} // Column Defs for Columns
@@ -84,7 +84,7 @@ export const SermonList = () => {
         animateRows={true} // Optional - set to 'true' to have rows animate when sorted
         // rowSelection='multiple' // Options - allows click selection of rows
         pagination={true}
-        domLayout="autoHeight"
+        // domLayout="autoHeight"
         // paginationPageSize={50}
         onCellClicked={cellClickedListener} // Optional - registering for Grid Event
         onSortChanged={onColumnChanged}
