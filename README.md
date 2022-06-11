@@ -3,7 +3,7 @@
 
 ## Build
 * it is using the CRA(create-react-app).
-* run `npm run bd` to build and deplo.
+* run `npm run bd` to build and deploy.
 
 ## Hosting
 * this is hosted on [this repo's github pages](https://vcfvct.github.io/cccg-sermon). 
