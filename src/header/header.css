@@ -2,9 +2,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 15%
 }
 .header-link{
   text-decoration: none;
   cursor: pointer;
   color: #8bf4f4;
+  font-size: calc(1rem + 1vw);
+  line-height: calc(1.4rem + 1.4vw);
 }
