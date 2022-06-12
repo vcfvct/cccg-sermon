@@ -11,6 +11,8 @@ let localCachedSermons: Array<PodCastMeta> | null = null;
 let localCachedColumnState: Array<ColumnState> | null = null;
 let localCachedPageNumber = -1;
 let localCachedLastClicked: number | null = null;
+const GSheetId = '1tLVTEEr9xinmMM00WIaKWkegm2CnHyEJULIhhOfSrl0';
+const GSheetTabName = 'sermons';
 
 export const SermonList = () => {
 
@@ -26,7 +28,8 @@ export const SermonList = () => {
       if (sessionCachedSermons) { // check session cache
         setSermons(JSON.parse(sessionCachedSermons));
       } else {
-        parse('./sermons.csv', {
+        parse(`https://docs.google.com/spreadsheets/d/${GSheetId}/gviz/tq?tqx=out:csv&sheet=${GSheetTabName}`, {
+        // parse('./sermons.csv', {
           download: true,
           header: true,
           // dynamicTyping: true,

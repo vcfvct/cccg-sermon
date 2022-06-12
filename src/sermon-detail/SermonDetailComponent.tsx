@@ -27,7 +27,7 @@ export const SermonDetailComponent = () => {
         <div> {podCast.eventDate ? new Date(podCast.eventDate).toLocaleDateString() : ''}</div>
       </div>
       <h1>{podCast.title}</h1>
-      <div style={{ margin: '20px' }}>{podCast.eventName}: {podCast.description}</div>
+      <div style={{ margin: '20px' }}>{podCast.eventName} {podCast.description}</div>
       {podCast.youtubeUrl && <iframe src={podCast.youtubeUrl} id='youtube-embed' title='youtube-embed' width="560" height="315" allowFullScreen></iframe>}
       <div className='download-container'>
         {podCast.audio && <a href={podCast.audio} target="blank"><div className='download-link'><Mp3Icon />音频文件下载</div></a>}
