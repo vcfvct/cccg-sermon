@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { parse, ParseResult } from 'papaparse';
+import { parse, ParseRemoteConfig, ParseResult } from 'papaparse';
 import { AgGridReact } from 'ag-grid-react'; // the AG Grid React Component
 
 import 'ag-grid-community/dist/styles/ag-grid.css'; // Core grid CSS, always needed
@@ -13,12 +13,28 @@ let localCachedPageNumber = -1;
 let localCachedLastClicked: number | null = null;
 const GSheetId = '1tLVTEEr9xinmMM00WIaKWkegm2CnHyEJULIhhOfSrl0';
 const GSheetTabName = 'sermons';
+const GSheetCsvUrl = `https://docs.google.com/spreadsheets/d/${GSheetId}/gviz/tq?tqx=out:csv&sheet=${GSheetTabName}`;
+const BackupCsvUrl = './sermons.csv';
 
 export const SermonList = () => {
 
   const [sermons, setSermons] = useState<Array<PodCastMeta>>([]);
   const navigate = useNavigate();
   const SermonsKey = 'sermonsCsv';
+
+  const fetchCsv = (url: string, onError?: (error: Error) => void) => {
+    const parseRemoteOption: ParseRemoteConfig = {
+      download: true,
+      header: true,
+      complete: (rs: ParseResult<PodCastMeta>) => {
+        localCachedSermons = rs.data;
+        sessionStorage.setItem(SermonsKey, JSON.stringify(rs.data))
+        setSermons(rs.data);
+      },
+    }
+    onError && (parseRemoteOption.error = onError);
+    parse(url, parseRemoteOption);
+  };
 
   useEffect(() => {
     if (localCachedSermons) { // check local memory cache first
@@ -28,17 +44,7 @@ export const SermonList = () => {
       if (sessionCachedSermons) { // check session cache
         setSermons(JSON.parse(sessionCachedSermons));
       } else {
-        parse(`https://docs.google.com/spreadsheets/d/${GSheetId}/gviz/tq?tqx=out:csv&sheet=${GSheetTabName}`, {
-        // parse('./sermons.csv', {
-          download: true,
-          header: true,
-          // dynamicTyping: true,
-          complete: (rs: ParseResult<PodCastMeta>) => {
-            localCachedSermons = rs.data;
-            sessionStorage.setItem(SermonsKey, JSON.stringify(rs.data))
-            setSermons(rs.data);
-          }
-        });
+        fetchCsv(GSheetCsvUrl, () => fetchCsv(BackupCsvUrl));
       }
     }
   }, [])
