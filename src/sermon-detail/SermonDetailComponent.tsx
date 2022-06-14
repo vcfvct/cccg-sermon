@@ -1,17 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import './SermonDetailStyles.scss';
 import { Link, useLocation } from "react-router-dom";
-import { PodCastMeta } from "../sermon-list/SermonList";
 import { BackArrow } from '../icons/BackArrow';
 import { Mp3Icon } from '../icons/Mp3Icon';
 import { VideoIcon } from '../icons/VideoIcon';
+import { PodCastMeta } from "../types";
+import { SermonContext } from "../sermon-context";
 
 export const SermonDetailComponent = () => {
-  const { state } = useLocation();
-  const podCast = state as PodCastMeta;
+  const { state, search } = useLocation();
+  // const [searchParams] = useSearchParams();
+  const sermons = useContext(SermonContext)
 
-  const preacherIcon = getPreacherIcon(podCast.author);
-  return (
+  let podCast: PodCastMeta | undefined = state as PodCastMeta | undefined;
+  const searchParams = new URLSearchParams(search)
+  if (!podCast && searchParams.has('id')) {
+    podCast = sermons.find(s => s.id.toString() === searchParams.get('id'));
+  }
+
+  const preacherIcon = getPreacherIcon(podCast?.author);
+  return podCast ? (
     <div className="detail-container">
       <div className="back-container">
         <Link to='/'>
@@ -34,10 +42,10 @@ export const SermonDetailComponent = () => {
         {podCast.video && <a href={podCast.video} target="blank"><div className='download-link'><VideoIcon />视频文件下载</div></a>}
       </div>
     </div>
-  )
+  ): <></>
 }
 
-function getPreacherIcon(name: string) {
+function getPreacherIcon(name?: string) {
   switch (name) {
     case '許健文長老':
       return './ppl/jianwen.jpg';

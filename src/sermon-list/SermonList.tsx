@@ -1,53 +1,20 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { parse, ParseRemoteConfig, ParseResult } from 'papaparse';
+import React, { useMemo, useCallback, useContext } from 'react';
 import { AgGridReact } from 'ag-grid-react'; // the AG Grid React Component
 
 import 'ag-grid-community/dist/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css'; // Optional theme 
 import { ColDef, ColumnState, FirstDataRenderedEvent, PaginationChangedEvent, RowClickedEvent, SortChangedEvent } from 'ag-grid-community';
 import { useNavigate } from 'react-router-dom';
+import { SermonContext } from '../sermon-context';
 
-let localCachedSermons: Array<PodCastMeta> | null = null;
 let localCachedColumnState: Array<ColumnState> | null = null;
 let localCachedPageNumber = -1;
 let localCachedLastClicked: number | null = null;
-const GSheetId = '1tLVTEEr9xinmMM00WIaKWkegm2CnHyEJULIhhOfSrl0';
-const GSheetTabName = 'sermons';
-const GSheetCsvUrl = `https://docs.google.com/spreadsheets/d/${GSheetId}/gviz/tq?tqx=out:csv&sheet=${GSheetTabName}`;
-const BackupCsvUrl = './sermons.csv';
 
 export const SermonList = () => {
 
-  const [sermons, setSermons] = useState<Array<PodCastMeta>>([]);
   const navigate = useNavigate();
-  const SermonsKey = 'sermonsCsv';
-
-  const fetchCsv = (url: string, onError?: (error: Error) => void) => {
-    const parseRemoteOption: ParseRemoteConfig = {
-      download: true,
-      header: true,
-      complete: (rs: ParseResult<PodCastMeta>) => {
-        localCachedSermons = rs.data;
-        sessionStorage.setItem(SermonsKey, JSON.stringify(rs.data))
-        setSermons(rs.data);
-      },
-    }
-    onError && (parseRemoteOption.error = onError);
-    parse(url, parseRemoteOption);
-  };
-
-  useEffect(() => {
-    if (localCachedSermons) { // check local memory cache first
-      setSermons(localCachedSermons);
-    } else {
-      const sessionCachedSermons = sessionStorage.getItem(SermonsKey);
-      if (sessionCachedSermons) { // check session cache
-        setSermons(JSON.parse(sessionCachedSermons));
-      } else {
-        fetchCsv(GSheetCsvUrl, () => fetchCsv(BackupCsvUrl));
-      }
-    }
-  }, [])
+  const sermons = useContext(SermonContext)
 
   // Each Column Definition results in one Column.
   const columnDefs: ColDef[] = [
@@ -66,7 +33,7 @@ export const SermonList = () => {
   // Example of consuming Grid Event
   const cellClickedListener = useCallback((e: RowClickedEvent) => {
     localCachedLastClicked = e.rowIndex;
-    navigate('/detail', { state: e.data });
+    navigate(`/detail?id=${e.data.id}`, { state: e.data });
   }, [navigate]);
   // store column state
   const onColumnChanged = (event: SortChangedEvent) => localCachedColumnState = event.columnApi.getColumnState();
@@ -106,18 +73,5 @@ export const SermonList = () => {
       />
     </div>
   );
-}
-
-export interface PodCastMeta {
-  id: number;
-  title: string;
-  body: string;
-  author: string;
-  eventDate: string;
-  eventName: string;
-  audio?: string;
-  video?: string;
-  youtubeUrl?: string;
-  description?: string;
 }
 
