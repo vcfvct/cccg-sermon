@@ -36,7 +36,10 @@ export const SermonDetailComponent = () => {
       </div>
       <h1>{podCast.title}</h1>
       <div style={{ margin: '20px' }}>{podCast.eventName} {podCast.description}</div>
-      {podCast.youtubeUrl && <iframe src={podCast.youtubeUrl} id='youtube-embed' title='youtube-embed' width="560" height="315" allowFullScreen></iframe>}
+      {podCast.youtubeUrl && (
+        <div className="video-container">
+          <iframe src={podCast.youtubeUrl} id='youtube-embed' title='youtube-embed' width="560" height="315" allowFullScreen></iframe>
+        </div> )}
       <div className='download-container'>
         {podCast.audio && <a href={podCast.audio} target="blank"><div className='download-link'><Mp3Icon />音频文件下载</div></a>}
         {podCast.video && <a href={podCast.video} target="blank"><div className='download-link'><VideoIcon />视频文件下载</div></a>}
