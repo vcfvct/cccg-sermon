@@ -24,7 +24,8 @@
   "scripts": {
     "start": " BROWSER=none react-scripts start",
     "build": "react-scripts build",
-    "deploy": "gh-pages -d build",
+    "add-domain": "echo \"sermon.cccgermantown.org\" > build/CNAME",
+    "deploy": "npm run add-domain && gh-pages -d build",
     "bd": "npm run build && npm run deploy",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
